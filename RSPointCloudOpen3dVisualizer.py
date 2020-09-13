@@ -122,7 +122,7 @@ if __name__ == "__main__":
             pcd.points = temp.points
             pcd.colors = temp.colors
 
-            voxel_down_pcd = pcd.voxel_down_sample(voxel_size=0.02)
+            #voxel_down_pcd = pcd.voxel_down_sample(voxel_size=0.02)
             #o3d.visualization.draw_geometries([voxel_down_pcd])
 
 
