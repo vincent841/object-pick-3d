@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # Create a pipeline
     pipeline = rs.pipeline()
 
-    #Create a config and configure the pipeline to stream
+    # Create a config and configure the pipeline to stream
     #  different resolutions of color and depth streams
     config = rs.config()
 
@@ -49,14 +49,14 @@ if __name__ == "__main__":
     spatial.set_option(rs.option.filter_magnitude, 5)
     spatial.set_option(rs.option.filter_smooth_alpha, 1)
     spatial.set_option(rs.option.filter_smooth_delta, 50)
-    spatial.set_option(rs.option.holes_fill, 3)    
+    spatial.set_option(rs.option.holes_fill, 3)
 
     colorizer = rs.colorizer()
     filters = [rs.disparity_transform(),
-            rs.decimation_filter(),
-            rs.spatial_filter(),
-            rs.temporal_filter(),
-            rs.disparity_transform(False)]    
+               rs.decimation_filter(),
+               rs.spatial_filter(),
+               rs.temporal_filter(),
+               rs.disparity_transform(False)]
 
     # Getting the depth sensor's depth scale (see rs-align example for explanation)
     depth_scale = depth_sensor.get_depth_scale()
@@ -95,7 +95,8 @@ if __name__ == "__main__":
             # Get aligned frames
             aligned_depth_frame = aligned_frames.get_depth_frame()
             color_frame = aligned_frames.get_color_frame()
-            intrinsic = o3d.camera.PinholeCameraIntrinsic(get_intrinsic_matrix(color_frame))
+            intrinsic = o3d.camera.PinholeCameraIntrinsic(
+                get_intrinsic_matrix(color_frame))
 
             # Validate that both frames are valid
             if not aligned_depth_frame or not color_frame:
@@ -103,7 +104,7 @@ if __name__ == "__main__":
 
             if True:
                 for f in filters:
-                    aligned_depth_frame = f.process(aligned_depth_frame)            
+                    aligned_depth_frame = f.process(aligned_depth_frame)
 
             depth_image = o3d.geometry.Image(
                 np.array(aligned_depth_frame.get_data()))
@@ -123,18 +124,17 @@ if __name__ == "__main__":
             pcd.colors = temp.colors
 
             #voxel_down_pcd = pcd.voxel_down_sample(voxel_size=0.02)
-            #o3d.visualization.draw_geometries([voxel_down_pcd])
-
+            # o3d.visualization.draw_geometries([voxel_down_pcd])
 
             # pcd.paint_uniform_color([0.5, 0.5, 0.5])
             # pcd_tree = o3d.geometry.KDTreeFlann(pcd)
 
             # # print("Paint the 1500th point red.")
-            # # pcd.colors[1500] = [1, 0, 0]            
+            # # pcd.colors[1500] = [1, 0, 0]
 
             # print("Find its 200 nearest neighbors, and paint them blue.")
             # [k, idx, _] = pcd_tree.search_knn_vector_3d(pcd.points[1500], 200)
-            # np.asarray(pcd.colors)[idx[1:], :] = [0, 0, 1]            
+            # np.asarray(pcd.colors)[idx[1:], :] = [0, 0, 1]
 
             if frame_count == 0:
                 vis.add_geometry(pcd)
