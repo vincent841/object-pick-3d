@@ -9,7 +9,6 @@ from datetime import datetime
 
 from camera import camera_dev_realsense, camera_videocapture
 
-
 if __name__ == '__main__':
 
     rsCamDev = camera_dev_realsense.RealsenseCapture('001622072547')
